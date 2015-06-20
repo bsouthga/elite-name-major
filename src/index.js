@@ -1,13 +1,14 @@
 import "babel/polyfill";
 import d3 from 'd3';
 import csv from './csv.js';
-
+import _ from 'lodash';
 
 class Chart {
 
   constructor({data, id}) {
     this.data = data;
     this.container = d3.select(id);
+    d3.select(window).on('resize', _.debounce(::this.draw, 50));
   }
 
   draw() {
@@ -22,7 +23,7 @@ class Chart {
         width = bb.width - margin.left - margin.right,
         height = bb.height - margin.top - margin.bottom;
 
-    let svg = this.container.append('svg')
+    let svg = this.container.html('').append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
