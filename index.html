@@ -7,12 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <style>
 
-
-    .container {
-      margin-top: 50px;
-      text-align: center;
-    }
-
     text {
       font-size: 8pt;
     }
@@ -27,9 +21,15 @@
       stroke-width: 1px;
     }
 
-    .x.axis .domain {
+    .container {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .x.axis .domain,
+    .x.axis line {
       fill : none;
-      stroke: #000;
+      stroke: none;
     }
 
     .x.grid {
@@ -40,11 +40,6 @@
     .x.grid .tick line {
       stroke: #ccc;
       stroke-dasharray: 3,3;
-    }
-
-    .x.axis line {
-      stroke : #333;
-      stroke-width: 1px;
     }
 
     #chart {
