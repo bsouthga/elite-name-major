@@ -19,7 +19,7 @@ class Chart {
 
     let bb = this.container.node().getBoundingClientRect();
 
-    let margin = { top: 50, right: 100, bottom: 10, left: 100 },
+    let margin = { top: 50, right: 30, bottom: 10, left: 30 },
         width = bb.width - margin.left - margin.right,
         height = bb.height - margin.top - margin.bottom;
 
