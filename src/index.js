@@ -2,13 +2,14 @@ import "babel/polyfill";
 import d3 from 'd3';
 import csv from './csv.js';
 import _ from 'lodash';
+import pym from 'pym.js';
+
 
 class Chart {
 
   constructor({data, id}) {
     this.data = data;
     this.container = d3.select(id);
-    d3.select(window).on('resize', _.debounce(::this.draw, 50));
   }
 
   draw() {
@@ -136,6 +137,8 @@ async function render() {
   let chart = new Chart({data, id: '#chart'});
 
   chart.draw();
+  let renderCallback = _.debounce(::chart.draw, 50);
+  new pym.Child({renderCallback});
 }
 
 render();
