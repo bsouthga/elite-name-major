@@ -3,6 +3,11 @@ import d3 from 'd3';
 import csv from './csv.js';
 import _ from 'lodash';
 import pym from 'pym.js';
+import tooltipFactory from './tooltip.js';
+
+let tooltip = tooltipFactory();
+
+tooltip.hide();
 
 let params = () => {
   return window
@@ -112,6 +117,24 @@ class Chart {
           return dy/2 + (smallScreen ? -2 : 1)*height/4;
         }
       })
+
+
+    row.on('mouseover', function(d) {
+
+      let fmt = d3.format('%')
+
+      let thisrow = d3.select(this);
+
+      thisrow.select('text').classed('highlight', true);
+
+      tooltip
+        .text({value: percent(d.p)})
+        .position(thisrow.select('circle').node());
+
+    }).on('mouseout', () => {
+      row.selectAll('text').classed('highlight', false);
+      tooltip.hide();
+    })
 
     let midline = svg.append('line')
       .attr({
