@@ -4,6 +4,22 @@ import csv from './csv.js';
 import _ from 'lodash';
 import pym from 'pym.js';
 
+let params = () => {
+  return window
+    .location
+    .search
+    .slice(1)
+    .split("&")
+    .reduce((o, v) => {
+      let [key, value] = v.split("=");
+      o[key] = value;
+      return o;
+    }, {})
+}
+
+if (params().noSource) {
+  d3.select('.source').remove();
+}
 
 class Chart {
 
@@ -19,6 +35,8 @@ class Chart {
     let {data} = this;
 
     let bb = this.container.node().getBoundingClientRect();
+
+    let smallScreen = bb.width < 500;
 
     let margin = { top: 50, right: 30, bottom: 10, left: 30 },
         width = bb.width - margin.left - margin.right,
@@ -86,12 +104,12 @@ class Chart {
       .attr({
         x : function(d) {
           let {width} = this.getBBox();
-          let xval = x(d.p);
+          let xval = smallScreen ? x(0) : x(d.p);
           return d.p < 0 ? (xval - width - 10) : (xval + 10);
         },
         y : function(d) {
           let {height} = this.getBBox();
-          return dy/2 + height/4;
+          return dy/2 + (smallScreen ? -2 : 1)*height/4;
         }
       })
 
